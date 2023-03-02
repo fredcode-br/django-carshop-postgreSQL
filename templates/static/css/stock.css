@@ -1,0 +1,138 @@
+.filter-stock {
+    width: 25%;
+    border-top: 1px solid rgba(255, 255, 255, 0.55);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+}
+
+.top-stock {
+    display: flex;
+    height: 70px;
+    width: 90%;
+}
+
+.stock-range-input-text {
+    width: 75px;
+}
+
+.filter-inputs {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+}
+
+.btn-open-filter {
+    width: 50px;
+    height: 50px;
+    border-radius: 0px;
+    font-size: 30px;
+}
+
+.btn-open-text {
+    height: 50px;
+    border-radius: 0px;
+    font-size: 18px;
+}
+
+.list {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.item-image {
+    height: 225px;
+}
+
+.item-image-price {
+    top: 0;
+    right: 0;
+    width: 150px;
+    height: 40px;
+}
+
+.item:hover {
+    background-color: rgba(255, 255, 255, 0.04);
+}
+
+.car-description {
+    height: 115px;
+}
+
+.content-vehicles {
+    width: 90%;
+}
+
+.controls a {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14;
+    border: 1px solid #cccaca;
+    color: #828282;
+}
+
+.last {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.first {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;;
+}
+
+.numbers, .controls a:not(.numbers),
+.controls a.numbers a{
+    width: 40px;
+    height: 40px;
+
+    transition: all 300ms;
+}
+
+.controls a:hover, .btn-active{
+    font-size: 14px;
+    color: white;
+    background-color: #000000;
+    border: none;
+}
+
+.controls .disable {
+    cursor: not-allowed;
+    opacity: .5;
+}
+
+@media (max-width: 576px) {
+    .list  {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .item-image {
+        min-height: 275px;
+    }
+}
+
+@media (max-width: 768px) {
+    .filter-stock {
+        width: 100%;
+    }
+
+    .btn-close-filter {
+        padding: 0;
+    }
+
+    .actions-filter {
+        height: 90px;
+    }
+
+    .btn-close-filter {
+        font-size: 25px;
+    }
+
+    .item-image {
+        height: 275px;
+    }
+}
+
+@media (max-width: 960px) {
+    .list  {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+

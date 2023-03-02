@@ -1,0 +1,65 @@
+#announcement {
+    margin-top: 70px;
+}
+  
+#mainPhoto {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: 0.3s;
+}
+  
+  .image-wrapper {
+    max-height: 100px;
+    margin-top: 3px;
+  }
+  
+  .imgCarousel {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    transition: 0.3s;
+  }
+  
+  img {
+    cursor: pointer;
+    box-shadow: 0px 0px 10px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .previous,
+  .next {
+    width: 30px;
+    height: 100%;
+    border: none;
+    background-color: #000000;
+    color: #FFF;
+    font-size: 20px;
+  }
+  
+  .vehicle-data p {
+    font-weight: bold;
+  }
+  
+  .vehicle-data span {
+    font-weight: normal;
+  }
+  
+  .announcement-description {
+    margin: 70px 0;
+  }
+  
+  .announcement-data button {
+    height: 70px;
+  }
+  .announcement-data h1 {
+    text-transform: uppercase;
+    font-size: 35px;
+    font-family: 'Heebo', sans-serif;
+  }
+  
+  .announcement-data h2 {
+    text-transform: uppercase;
+    font-size: 30px;
+    font-family: 'Heebo', sans-serif;
+  }
+  

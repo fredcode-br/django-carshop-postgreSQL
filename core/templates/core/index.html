@@ -1,0 +1,220 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block main %}
+<section id="hero" class="d-flex flex-column justify-content-center align-items-center">
+    <div class="container text-center text-md-left d-flex justify-content-evenly position-relative">
+      <div class="hero-filter position-absolute d-none d-md-block">
+        <div class="hero-filter-area px-4 py-4 py-md-5">
+          <button type="button" class="btn d-md-none button-close w-100 bg-danger text-light mb-4" aria-label="Close">Fechar</button>
+          <form action="{% url 'url_principal' %}" method="POST">{% csrf_token %}
+            <select class="form-select mb-4" name="marca_id" id="marca_id"> 
+              <option value="" selected>Marca</option>
+              {% for m in marca %}
+                <option value="{{ m.id_fabricante }}"> {{ m.fabricante }} </option>
+              {% endfor %}
+            </select>
+
+            <select class="form-select mb-4" name="modelo_id" id="modelo_id">
+              <option value="" selected>Categoria</option>
+              {% for c in categoria %}
+                <option value="{{ c.id_categoria }}"> {{ c.categoria }} </option>
+              {% endfor %}
+            </select>
+          
+            <select class="form-select mb-4" name="ano" id="ano">
+              <option value="" selected>Ano</option>
+              {% for ano in anos %}
+                <option value="{{ ano }}"> {{ ano }} </option>
+              {% endfor %}
+            </select>
+
+            <div class="price p-2 mb-4 d-flex align-items-center justify-content-center">
+              <div class="wrapper w-100">
+                      <div class="price-input d-flex justify-content-between align-items-center mx0 my-1 my-md-3">
+                        <div class="field">
+                          <span>Min</span>
+                          <input type="number" class="input-min h-100" value="0">
+                        </div>
+                        <div class="field">
+                          <span>Max</span>
+                          <input type="number" class="input-max h100" value="{{ maiorpreco }}">
+                        </div>
+                      </div>
+                      <div class="slider position-relative">
+                        <div class="progress position-absolute"></div>
+                      </div>
+                      <div class="range-input text-start position-relative">
+                        <input name="menorPreco" type="range" class="range-min position-absolute w-100" min="0" max="{{ maiorpreco }}" value="0" step="500">
+                        <input name="maiorPreco" type="range" class="range-max position-absolute w-100" min="0" max="{{ maiorpreco }}" value="{{ maiorpreco }}" step="500">
+                      </div>
+                    </div>
+            </div>
+
+            <button class="btn bg-black text-light col-5">Buscar</button>
+
+          </form>
+        </div>
+      </div>
+      <div class="hero-text d-block text-white col-12 col-sm-6 pt-4" >
+        <h1>Car Shop</h1>
+        <h2 class="pt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum quos cupiditate nesciunt autem odit explicabo!</h2>
+        <button class="btn-search-vehicle btn col-8 mt-4 d-inline d-md-none">Procurar veículo</button>
+      </div>
+    </div>
+</section> 
+
+
+<section id="favorites">
+  <div class="container">
+    <h2>Os favoritos do momento</h2>
+     <div class="image-favorites d-flex justify-content-between">
+        <div class="d-flex gap-1">
+          <ul class="d-flex justify-content-between list-unstyled overflow-hidden gap-1 p-0 m-0 col">
+              <li class="col-12 col-md-6 col-lg-3 d-flex flex-column" role='button'>
+                <a href="{% url 'url_anuncio' veiculos.0.id %}">
+                  <img class="imgFav" src="{{ imagens.0.1.url }}" alt="">
+                  <div class="vehicle-data-home bg-black text-light d-flex justify-content-center align-items-center">
+                    <p class="m-0">{{ veiculos.0 }}</p>
+                  </div>  
+                </a> 
+              </li>
+              <li class="col-12 col-md-6 col-lg-3 d-flex flex-column" role='button'>
+                <a href="{% url 'url_anuncio' veiculos.1.id %}">
+                  <img class="imgFav" src="{{ imagens.1.1.url }}" alt="">
+                  <div class="vehicle-data-home bg-black text-light d-flex justify-content-center align-items-center">
+                    <p class="m-0">{{ veiculos.1 }}</p>
+                  </div>   
+                </a>
+              </li>
+              <li class="col-12 col-md-6 col-lg-3 d-flex flex-column" role='button'>
+                <a href="{% url 'url_anuncio' veiculos.2.id %}">
+                  <img class="imgFav" src="{{ imagens.2.1.url }}" alt="">
+                  <div class="vehicle-data-home bg-black text-light d-flex justify-content-center align-items-center">
+                    <p class="m-0">{{ veiculos.2 }}</p>
+                  </div>  
+                </a> 
+              </li>
+              <li class="col-12 col-md-6 col-lg-3 d-flex flex-column" role='button'>
+                <a href="{% url 'url_anuncio' veiculos.3.id %}">
+                  <img class="imgFav" src="{{ imagens.3.1.url }}" alt="">
+                  <div class="vehicle-data-home bg-black text-light d-flex justify-content-center align-items-center">
+                    <p class="m-0">{{ veiculos.3 }}</p>
+                  </div> 
+                </a>  
+              </li>
+          </ul>
+          <div class="fav-button">
+            <a href="{% url 'url_estoque' %}"><button class="bg-black border-0 text-light p-0 btn">Ver mais</button></a>
+          </div>
+        </div>
+     </div>
+  </div>
+</section>
+
+<section id="models">
+    <div class="container">
+      <h2>Procurar por modelo</h2>
+       <div class="models-button row d-flex justify-content-center justify-content-md-between gap-2">
+          <button class="btn col-10 col-md-2 bg-black text-light">Hatch</button>
+          <button class="btn col-10 col-md-2 bg-black text-light">Sedan</button>
+          <button class="btn col-10 col-md-2 bg-black text-light">Suv</button>
+          <button class="btn col-10 col-md-2 bg-black text-light ">Pick up</button>
+          <button class="btn col-10 col-md-2 bg-black text-light">Outros</button>
+
+       </div>
+    </div>
+</section> 
+
+<section id="about">
+  <div class="container">
+    <div class="d-flex flex-column flex-md-row-reverse col">
+      <div class="about-image col col-md-6">
+        <img class="w-100" src="{% static 'img/shop.png' %}" alt="">
+      </div>
+      <div class="about-text bg-black text-light text-center pt-3 pt-md-5 col">
+        <h3 class="fs-1 p-0">LOREM IPSUM</h3>
+        <p class="px-3 p-lg-5 fs-5 fs-md-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+          Necessitatibus voluptate, minus voluptatum velit quis tempore
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+          Necessitatibus voluptate!</p>
+      </div>
+    </div>
+  </div>
+</section> 
+
+<section id="stock">
+<div class="container">
+  <h2>Nosso estoque</h2>
+  <div id="stock-home" class="row d-flex justify-content-center g-2 g-md-4">
+    {% for veiculo in veiculos %}
+      <div class="col-6 col-lg-3"><a href="{% url 'url_anuncio' veiculo.id %}">
+        {% for imagem in imagens %}
+          {% if imagem.0 == veiculo.id %}
+            <img class="imgScock" src="{{ imagem.1.url }}" alt=""></a></div>
+          {% endif %}
+        {% endfor %}
+    {% endfor %}
+  </div>
+  <div class="stock-home-button d-flex justify-content-center w-100 mt-5">
+    <a href="{% url 'url_estoque' %}"><button class="btn bg-black text-light">Ver estoque</button></a>
+  </div>
+</div>
+</section> 
+
+<section id="most-wanted">
+  <div class="container">
+    <h2>Os mais procurados</h2>
+     <div class="image-most-wanted d-flex justify-content-between">
+        <div class="d-flex gap-1">
+          <ul class="d-flex justify-content-between list-unstyled overflow-hidden gap-1 p-0 m-0 col">
+              <li class="col-12 col-md-6 col-lg-3 d-flex flex-column" role='button'>
+                <a href="{% url 'url_anuncio' veiculos.0.id %}">
+                  <h1>1</h1>
+                  <img class="imgMost" src="{{ imagens.0.1.url }}" alt="">
+                  <div class="vehicle-data-home bg-black text-light d-flex justify-content-center align-items-center">
+                    <p class="m-0">{{ veiculos.0 }}</p>
+                  </div>  
+                </a> 
+              </li>
+              <li class="col-12 col-md-6 col-lg-3 d-flex flex-column" role='button'>
+                <a href="{% url 'url_anuncio' veiculos.1.id %}">
+                <h1>2</h1>
+                <img class="imgMost" src="{{ imagens.1.1.url }}" alt="">
+                <div class="vehicle-data-home bg-black text-light d-flex justify-content-center align-items-center">
+                  <p class="m-0">{{ veiculos.1 }}</p>
+                </div>   
+                </a>
+              </li>
+              <li class="col-12 col-md-6 col-lg-3 d-flex flex-column" role='button'>
+                <a href="{% url 'url_anuncio' veiculos.2.id %}">
+                  <h1>3</h1>
+                  <img class="imgMost" src="{{ imagens.2.1.url }}" alt="">
+                  <div class="vehicle-data-home bg-black text-light d-flex justify-content-center align-items-center">
+                    <p class="m-0">{{ veiculos.2 }}</p>
+                  </div>   
+                </a>
+              </li>
+              <li class="col-12 col-md-6 col-lg-3 d-flex flex-column" role='button'>
+                <a href="{% url 'url_anuncio' veiculos.3.id %}">
+                  <h1>4</h1>
+                  <img class="imgMost" src="{{ imagens.3.1.url }}" alt="">
+                  <div class="vehicle-data-home bg-black text-light d-flex justify-content-center align-items-center">
+                    <p class="m-0">{{ veiculos.3 }}</p>
+                  </div>   
+                </a>
+              </li>
+          </ul>
+          <div class="most-button">
+              <button class="bg-black border-0 text-light p-0 btn">Ver mais</button>
+          </div>
+        </div>
+     </div>
+  </div>
+</section> 
+{% endblock %}
+
+{% block extraimports %}
+    <script src="{% static 'js/main.js' %}"></script>
+{% endblock %}

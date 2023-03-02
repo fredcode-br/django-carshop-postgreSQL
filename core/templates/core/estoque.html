@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block extrahead %}
+    <link href="{% static 'css/stock.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block main %}
+
+<section id="stock-page">
+    <div class="container-xxl p-0">
+        <div class="container-stock-page d-md-flex w-100">
+            <div class="filter-stock bg-black d-none d-md-block">
+                <form action="{% url 'url_estoque' %}" method="POST">{% csrf_token %}
+                    <div class="filter-inputs text-light p-4">
+                        <h7 class="text-uppercase">Faixa de preco</h7><br>
+                        <div class="stock-range-input d-flex justify-content-between pt-3" style="font-size: 14px;">
+                            <label>De:<input class="stock-range-input-text ms-1 p-1" type="text" id="menorPreco" name="menorPreco"
+                                    placeholder="{{ menor_preco.0.preco }}" /></label>
+                            <label>Até:<input class="stock-range-input-text ms-1 p-1" type="text" id="maiorPreco" name="maiorPreco"
+                                    placeholder="{{ maior_preco.0.preco }}" /></label>
+                        </div>
+                    </div>
+                    <div class="filter-inputs text-light p-4">
+                        <h7 class="text-uppercase">Ano</h7><br>
+                        <div class="stock-range-input d-flex justify-content-between pt-3" style="font-size: 14px;">
+                            <label>De:<input class="stock-range-input-text ms-1 p-1" type="text" id="menorAno" name="menorAno"
+                                    placeholder="{{ menor_ano.0.ano }}" /></label>
+                            <label>Até:<input class="stock-range-input-text ms-1 p-1" type="text" id="maiorAno" name="maiorAno"
+                                    placeholder="{{ maior_ano.0.ano }}" /></label>
+                        </div>
+                    </div>
+
+                    <div class="filter-inputs text-light p-4">
+                        <h7 class="text-uppercase">Marca</h7><br>
+                        <select class="form-select my-3" name="id_marca" id="id_marca">
+                            <option value="">Todas</option>
+                            {% for m in marca %}
+                                <option value="{{ m.id }}">{{ m }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="filter-inputs text-light p-4">
+                        <h7 class="text-uppercase">Categoria</h7><br>
+                        <select class="form-select my-3" name="id_categoria" id="id_categoria">
+                            <option value="">Todas</option>
+                            {% for c in categoria %}
+                                <option value="{{ c }}">{{ c }}</option>
+                            {% endfor %}
+                        </select>
+
+                    </div>
+
+                    <div class="filter-inputs text-light p-4">
+                        <h7 class="text-uppercase">Estado</h7><br>
+
+                        <div class="form-check mt-3">
+                            <input class="form-check-input" type="checkbox" name="novo" id="novo" value="N">
+                            <label class="form-check-label" for="exampleRadios1">
+                                Novo
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="seminovo" id="seminovo" value="S">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Seminovo
+                            </label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" name="usado" id="usado" value="U">
+                            <label class="form-check-label" for="exampleRadios3">
+                                Usado
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="actions-filter d-flex align-items-center justify-content-center p-4">
+                        <button class="btn-close-filter btn bg-danger text-light w-25 h-100 me-3 d-md-none"><i
+                                class="bi bi-x"></i></button>
+                        <button class="btn-filter btn bg-white w-100 h-100">Filtrar<i class="bi bi-funnel"></i></button>
+                    </div>
+                </form>
+            </div>
+
+
+
+
+
+            <div class="stock-vehicles d-flex flex-column align-items-center w-100 pt-5">
+
+
+
+                <div class="top-stock bg-black d-flex justify-content-between align-items-center p-1 px-sm-4">
+                    <div class="order d-sm-flex align-items-center me-4">
+                        <p class="d-none d-lg-block p-0 m-0 text-light">Ordenar por:</p>
+                        <select class="order-select form-select ms-1 w-auto bg-light">
+                            <option>Popularidade</option>
+                            <option>Menor preço</option>ID
+                            <option>Maior preço</option>
+                            <option>Menor ano</option>
+                            <option>Maior ano</option>
+                        </select>
+                    </div>
+
+                    <div class="search">
+                        <div class="input-group rounded">
+                            <input type="search" class="search-input form-control rounded-1" placeholder="Procurar"
+                                aria-label="Search" aria-describedby="search-addon" />
+                            <span class="input-group-text border-0 bg-transparent" id="search-addon">
+                                <i class="bi bi-search text-light"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="open-filter d-flex justify-content-end d-md-none" style="width: 90%;">
+                    <button class="btn-open-text btn bg-black text-white p-2 mt-2 me-0 ms-1">Editar filtros</i></button>
+                    <button class="btn-open-filter btn bg-black text-white p-0 mt-2 me-0 ms-1"><i class="bi bi-filter"></i></button>
+                </div>
+
+                <div class="content-vehicles d-flex justify-content-center h-100">
+                    <div class="list m-0 p-0 pt-4 gap-4 w-100 d-grid">
+                        {% for i in page.object_list %}
+                            <div class="item position-relative" role="button">
+                                <a href="{% url 'url_anuncio' i.id %}" class="text-black">
+                                    <div class="item-image position-relative">
+                                        {% for imagem in imagens %}
+                                            {% if imagem.0 == i.id and i.status == 'V' %}
+                                                <img src="{{ imagem.1.url }}" class="w-100 h-100 shadow-none vendido" alt="foto capa">
+                                            {% elif imagem.0 == i.id %}
+                                                <img src="{{ imagem.1.url }}" class="w-100 h-100 shadow-none" alt="foto capa">
+                                            {% endif %}
+                                        {% endfor %}
+                                        <div class="item-image-price d-flex align-items-center justify-content-center position-absolute bg-black text-light fs-5 fw-bold">
+                                            <p class="m-0">{{i.preco}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="car-description d-flex flex-column justify-content-between bg-white py-2 px-3">
+                                        <p class="fw-bold fs-5 mb-3 lh-1">{{i.nome}}</p>
+                                        <div class="data-cars d-flex justify-content-between" style="font-size: 11px;">
+                                            <div class="text-center">
+                                                <p class="m-0">{{i.km}}</p>
+                                                <img src = "{% static 'img/km.svg' %}" alt="km" style="width: 20px;" class="shadow-none">
+                                            </div>
+                                            <div class="text-center">
+                                                <p class="m-0">{{i.cambio}}</p>
+                                                <img src = "{% static 'img/cambio.svg' %}" alt="cambio" style="width: 20px;" class="shadow-none">
+                                            </div>
+                                            <div class="text-center">
+                                                <p class="m-0">{{i.combustivel}}</p>
+                                                <img src = "{% static 'img/combustivel.svg' %}" alt="combustivel" style="width: 20px;" class="shadow-none">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+
+                <div class="controls m-5 d-flex justify-content-center align-items-center rounded">
+                    
+                    {% if page.has_previous %}
+                        <a href="?page=1" class="first" >&#171;</a>
+                        <a href="?page={{ page.previous_page_number }}"class="prev"><</a>
+                    {% else %}
+                        <a href="?page=1" class="first disable" >&#171;</a>
+                        <a href="?page=1"class="prev disable"><</a>
+                    {% endif %}
+                    
+                        {% for l in  page.paginator.page_range %}
+                            {% if forloop.counter < 6 %}
+                                {% if forloop.counter == page.number %}
+                                    <a class="numbers btn-active">{{ page.number }}</a>
+                                {% else %}
+                                    <a href="?page={{forloop.counter}}">{{forloop.counter}}</a>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+
+                    {% if page.has_next %}
+                        <a href="?page={{ page.next_page_number }}" class="next-btn">></a>
+                        <a href="?page={{ page.paginator.num_pages }}" class="last">&#187;</a>
+                    {% else %}
+                    <a href="?page={{ page.number }}" class="next-btn disable">></a>
+                    <a href="?page={{ page.number }}" class="last disable">&#187;</a>
+                    {% endif %}
+                </div>
+            </div>
+</section>
+
+{% endblock %}
+
+{% block extraimports %}
+    <script src="{% static 'js/stock.js' %}"></script>
+{% endblock %}

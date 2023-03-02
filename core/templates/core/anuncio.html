@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block extrahead %}
+    <link href="{% static 'css/announcement.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block main %}
+<section id="announcement" class="d-flex flex-column justify-content-center align-items-center">
+    <div class="container">
+  
+      <div class="d-lg-flex  justify-content-center align-items-center">
+  
+        <div class="announcement-images col-lg-6">
+          <div class="wrapper position-relative col-lg-10">
+            <img decoding="async" id="mainPhoto" name="Bali" src="{{ imagens.0.foto.url }}" />
+          </div>
+          <div class="image-wrapper col-lg-10 d-flex position-relative">
+            
+            <button onclick="moveCarousel('previous')"
+              class="previous position-absolute d-none align-items-center justify-content-center">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <ul id="carousel" class="d-flex gap-1 list-unstyled p-0 overflow-hidden m-0">
+              {% for imagem in imagens %}
+                <li><img decoding="async" class="imgCarousel col-3" src="{{ imagem.foto.url }}"/></li>
+              {% endfor %}
+              </ul>
+            <button onclick="moveCarousel('next')"
+              class="next position-absolute d-flex align-items-center justify-content-center" style="right: 0;">
+              <i class="bi bi-chevron-right"></i>
+            </button>
+  
+          </div>
+        </div>
+        <div class="announcement-data col-lg-6 pt-4">
+          <h1>{{ veiculo.nome }}</h1>
+          <div class="pt-4 col-lg-8 d-flex justify-content-around justify-content-lg-between">
+            <ul class="vehicle-data list-unstyled">
+              <li><p>Marca: <span>{{ veiculo.fabricante }}</span></p></li>
+              <li><p>km: <span>{{ veiculo.km }}</span></p></li>
+              <li><p>Combustível: <span>{{ veiculo.combustivel }}</span></p></li>
+              <li><p>Câmbio: <span>{{ veiculo.cambio }}</span></p></li>
+            </ul>
+            <ul class="vehicle-data list-unstyled">
+              <li><p>Modelo: <span>{{ veiculo.modelo }}</span></p></li>
+              <li><p>Cor: <span>{{ veiculo.cor }}</span></p> </li>
+              <li><p>Placa: <span>{{ veiculo.placa }}</span></p></li>
+              <li><p>Portas: <span>{{ veiculo.portas }}</span></p></li>
+            </ul>
+          </div>
+          <h2 class="pt-3 pb-4 text-start">R${{ veiculo.preco }}</h2>
+          <button class="col-12 col-lg-6 btn btn-success">Falar com um venvedor</button>
+        </div>
+      </div>
+      <div class="announcement-description">
+        <div class="optional">
+          <h3>OPCIONAIS</h3>
+          <p>{{ veiculo.opcionais }}</p>
+        </div>
+        <div class="comments pt-5">
+          <h3>OBSERVAÇÕES</h3>
+          <p>{{ veiculo.observacoes }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block extraimports %}
+    <script src="{% static 'js/announcement.js' %}"></script>
+{% endblock %}
