@@ -12,14 +12,14 @@
             <select class="form-select mb-4" name="marca_id" id="marca_id"> 
               <option value="" selected>Marca</option>
               {% for m in marca %}
-                <option value="{{ m.id_fabricante }}"> {{ m.fabricante }} </option>
+                <option value="{{ m.id }}"> {{ m.fabricante }} </option>
               {% endfor %}
             </select>
 
             <select class="form-select mb-4" name="modelo_id" id="modelo_id">
               <option value="" selected>Categoria</option>
               {% for c in categoria %}
-                <option value="{{ c.id_categoria }}"> {{ c.categoria }} </option>
+                <option value="{{ c.id }}"> {{ c.categoria }} </option>
               {% endfor %}
             </select>
           
@@ -117,12 +117,25 @@
     <div class="container">
       <h2>Procurar por modelo</h2>
        <div class="models-button row d-flex justify-content-center justify-content-md-between gap-2">
-          <button class="btn col-10 col-md-2 bg-black text-light">Hatch</button>
-          <button class="btn col-10 col-md-2 bg-black text-light">Sedan</button>
-          <button class="btn col-10 col-md-2 bg-black text-light">Suv</button>
-          <button class="btn col-10 col-md-2 bg-black text-light ">Pick up</button>
-          <button class="btn col-10 col-md-2 bg-black text-light">Outros</button>
+        <form action="" method="POST">{% csrf_token %}
+          <input type="submit" name="Hatch" value="Hatch" class="btn col-10 col-md-2 bg-black text-light">
+        </form> 
+    
+        <form action="" method="POST">{% csrf_token %}
+          <input type="submit" name="Sedan" value="Sedan" class="btn col-10 col-md-2 bg-black text-light">
+        </form> 
 
+        <form action="" method="POST">{% csrf_token %}
+          <input type="submit" name="SUV" value="SUV" class="btn col-10 col-md-2 bg-black text-light">
+        </form> 
+
+        <form action="" method="POST">{% csrf_token %}
+          <input type="submit" name="Pick up" value="Pick up" class="btn col-10 col-md-2 bg-black text-light ">
+        </form> 
+
+        <form action="" method="POST">{% csrf_token %}
+          <input type="submit" value="Outros" class="btn col-10 col-md-2 bg-black text-light">
+        </form> 
        </div>
     </div>
 </section> 

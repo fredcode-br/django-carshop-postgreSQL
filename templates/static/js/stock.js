@@ -1,4 +1,5 @@
 const windowWidth = window.innerWidth;
+const search = document.querySelector('#search')
 
 if (windowWidth < 576){
   const order = document.querySelector('.order-select')

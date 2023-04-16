@@ -358,8 +358,14 @@ button:hover {
         opacity: .9;
 }
 
-.models-button button, .stock-home-button{
+.models-button input, .stock-home-button{
     height: 50px;
+}
+.models-button form {
+    width: max-content;
+}
+.models-button input {
+    width:150px;
 }
 
 #stock-home>div {

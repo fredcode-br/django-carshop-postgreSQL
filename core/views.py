@@ -24,15 +24,46 @@ def home(request):
     maior_ano = Veiculo.objects.all().order_by('-ano')[:1]
     maior_preco = Veiculo.objects.all().order_by('-preco')[:1]
     maior_preco= int(maior_preco[0].preco)
-
+    
     if request.method == 'POST':
         marca_id = request.POST.get('marca_id')
-        modelo_id = request.POST.get('modelo_id')
-        Xmenor_preco = request.POST.get('menorPreco')
-        Xmaior_preco = request.POST.get('maiorPreco')
+        categoria_id = request.POST.get('modelo_id')
+        menorPreco = request.POST.get('menorPreco')
+        maiorPreco = request.POST.get('maiorPreco')
         ano = request.POST.get('ano')
+        
+        hatch = request.POST.get('Hatch')
+        sedan = request.POST.get('Sedan')
+        suv = request.POST.get('SUV')
+        pickup = request.POST.get('Pick Up')
+        categorias = [hatch, sedan,suv, pickup]
 
         veiculos = Veiculo.objects.filter(status='D').order_by('-vizualizacoes')
+        
+        for c in categorias:
+            if(c):
+                cat = Categoria.objects.filter(categoria=c).values_list('id', flat=True)
+                for ca in cat:
+                    cat_id=ca
+            
+                veiculos = veiculos.filter(categoria_id=cat_id)
+
+        if(marca_id):
+           veiculos = veiculos.filter(fabricante_id=marca_id)  
+        
+        if(categoria_id):
+           veiculos = veiculos.filter(categoria_id=categoria_id)  
+        
+        if(ano):
+            veiculos = veiculos.filter(ano=ano)
+        
+        if(maiorPreco):
+            veiculos = veiculos.filter(preco__lte=maiorPreco)
+        
+        if(menorPreco):
+            veiculos = veiculos.filter(preco__gte=menorPreco)
+    
+
         listaImagens = listarImagens(veiculos)
 
         veiculo_paginator = Paginator(veiculos, 12)
@@ -89,8 +120,37 @@ def estoque(request):
         maiorAno = request.POST.get('maiorAno')
         id_marca = request.POST.get('id_marca')
         id_categoria = request.POST.get('id_categoria')
+        
+        veiculos = Veiculo.objects.filter(status='D').order_by('-vizualizacoes')
 
-        veiculos = Veiculo.objects.all().order_by('vizualizacoes')
+        if(novo and usado and seminovo):
+            pass
+        else:
+            if(novo == None):
+                veiculos = veiculos.exclude(estado="N")
+            if(usado == None):
+                veiculos = veiculos.exclude(estado="U")
+            if(seminovo == None):
+                veiculos = veiculos.exclude(estado="S")
+
+        if(id_marca):
+           veiculos = veiculos.filter(fabricante_id=id_marca)  
+        
+        if(id_categoria):
+           veiculos = veiculos.filter(categoria_id=id_categoria)  
+        
+        if(maiorPreco):
+            veiculos = veiculos.filter(preco__lte=maiorPreco)
+        
+        if(menorPreco):
+            veiculos = veiculos.filter(preco__gte=menorPreco)
+        
+        if(maiorAno):
+            veiculos = veiculos.filter(ano__lte=maiorAno)
+        
+        if(menorAno):
+            veiculos = veiculos.filter(ano__gte=menorAno)
+
         listaImagens = listarImagens(veiculos)
 
         veiculo_paginator = Paginator(veiculos, 12)

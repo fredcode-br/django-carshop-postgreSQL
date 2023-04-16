@@ -47,7 +47,7 @@
                         <select class="form-select my-3" name="id_categoria" id="id_categoria">
                             <option value="">Todas</option>
                             {% for c in categoria %}
-                                <option value="{{ c }}">{{ c }}</option>
+                                <option value="{{ c.id }}">{{ c }}</option>
                             {% endfor %}
                         </select>
 
@@ -96,18 +96,21 @@
                     <div class="order d-sm-flex align-items-center me-4">
                         <p class="d-none d-lg-block p-0 m-0 text-light">Ordenar por:</p>
                         <select class="order-select form-select ms-1 w-auto bg-light">
-                            <option>Popularidade</option>
-                            <option>Menor preço</option>ID
-                            <option>Maior preço</option>
-                            <option>Menor ano</option>
-                            <option>Maior ano</option>
+                            <option value="pop">Popularidade</option>
+                            <option value="men-p">Menor preço</option>ID
+                            <option value="mai-p">Maior preço</option>
+                            <option value="men-a">Menor ano</option>
+                            <option value="mai-a">Maior ano</option>
                         </select>
                     </div>
 
                     <div class="search">
                         <div class="input-group rounded">
-                            <input type="search" class="search-input form-control rounded-1" placeholder="Procurar"
+                            <form action="{% url 'url_estoque' %}" method="POST">{% csrf_token %}
+                                <input type="search" name="" id="search" class="search-input form-control rounded-1" placeholder="Procurar"
                                 aria-label="Search" aria-describedby="search-addon" />
+                            </form>
+                            
                             <span class="input-group-text border-0 bg-transparent" id="search-addon">
                                 <i class="bi bi-search text-light"></i>
                             </span>

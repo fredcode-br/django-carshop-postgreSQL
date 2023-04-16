@@ -49,7 +49,7 @@ class Veiculo(models.Model):
     preco = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name='Preco')
     
     choices_estado = (('N', 'Novo'),('S', 'Seminovo'),('U', 'Usado'))
-    estado = models.CharField(max_length=1, choices=choices_estado)
+    estado = models.CharField(max_length=1, choices=choices_estado, default=('U', 'Usado'))
     
     choices_status = (('D', 'Disponível'),('V', 'Vendido'))
     status = models.CharField(max_length=1, choices=choices_status, default=('D', 'Disponível'))
