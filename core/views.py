@@ -123,7 +123,7 @@ def estoque(request):
         
         veiculos = Veiculo.objects.filter(status='D').order_by('-vizualizacoes')
 
-        if(novo and usado and seminovo):
+        if(novo == None and usado == None and seminovo == None):
             pass
         else:
             if(novo == None):
@@ -132,7 +132,7 @@ def estoque(request):
                 veiculos = veiculos.exclude(estado="U")
             if(seminovo == None):
                 veiculos = veiculos.exclude(estado="S")
-
+        
         if(id_marca):
            veiculos = veiculos.filter(fabricante_id=id_marca)  
         
